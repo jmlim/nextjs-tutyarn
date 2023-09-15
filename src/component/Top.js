@@ -5,7 +5,7 @@ export default function Top() {
   return (
     <div>
       <div style={{ display: "flex", paddingTop: 20 }}>
-        <div style={{ flex: "100px 0 0" }}>
+        <div style={{ flex: "1000px 0 0" }}>
           <img
             src="/images/jmlim.png"
             alt="logo"
