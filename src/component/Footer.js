@@ -1,3 +1,3 @@
 export default function Footer() {
-  return <div>카피라이트 어쩌구 푸터 임정묵</div>;
+  return <div>푸터</div>;
 }
