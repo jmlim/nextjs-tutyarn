@@ -1,27 +1,34 @@
 import Item from "@/src/component/Item";
 import axios from "axios";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import Head from "next/head";
 
-export default function Post() {
-  const router = useRouter();
-  const { id } = router.query;
+const Post = ({ item }) => {
+  return (
+    <>
+      {item && (
+        <>
+          <Head>
+            <title>{item.name}</title>
+            <meta name="description" content={item.description}></meta>
+          </Head>
+          <Item item={item} />
+        </>
+      )}
+    </>
+  );
+};
 
-  const [item, setItem] = useState({});
+export default Post;
 
-  const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const apiUrl = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+  const res = await axios.get(apiUrl);
+  const data = res.data;
 
-  function getData() {
-    axios.get(API_URL).then((res) => {
-      setItem(res.data);
-    });
-  }
-
-  useEffect(() => {
-    if (id && id > 0) {
-      getData();
-    }
-  }, [id]);
-
-  return <Item item={item} />;
+  return {
+    props: {
+      item: data,
+    },
+  };
 }
